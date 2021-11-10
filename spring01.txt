@@ -1,0 +1,23 @@
+스프링 pom.xml 파일에 숫자들 수정(pdf 파일에 있음)
+프로젝트 우클릭 메이븐 업데이트(alt+f5)
+
+src - main - webapp - WEB-INF - web.xml 의 제일 아래 닫는거 바로 위에다가 붙여넣기
+
+<filter>
+   <filter-name>encodingFilter</filter-name>
+   <filter-class>
+      org.springframework.web.filter.CharacterEncodingFilter     
+   </filter-class>
+   <init-param>
+      <param-name>encoding</param-name>   
+      <param-value>UTF-8</param-value>
+   </init-param>
+   <init-param>
+      <param-name>forceEncoding</param-name>  
+      <param-value>true</param-value>
+   </init-param>
+</filter>    
+<filter-mapping>
+   <filter-name>encodingFilter</filter-name>
+   <url-pattern>/*</url-pattern>                 
+</filter-mapping> 

@@ -1,0 +1,13 @@
+다같이 사용하는 index 파일같은 경우는 컨트롤러를 홈컨트롤러에 해주는게 좋다
+
+
+
+<resultMap id="member" type="com.care.root.member.dto.MemberDTO">
+	<id property="id" column="id"/>
+	<result property="pw" column="pw"/>
+	<result property="addr" column="addr"/>
+</resultMap>
+
+memberMapper.xml에서 맵핑작업을 할때 보통 primaryKey는 id로 지정하고 나머지는 result로 지정한다.
+컬럼명이 id라서 id property를 사용한 것이 아니다!
+resultMap <-select문의 리턴 타입을 맵핑한것
