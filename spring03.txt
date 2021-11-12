@@ -11,3 +11,20 @@
 memberMapper.xml에서 맵핑작업을 할때 보통 primaryKey는 id로 지정하고 나머지는 result로 지정한다.
 컬럼명이 id라서 id property를 사용한 것이 아니다!
 resultMap <-select문의 리턴 타입을 맵핑한것
+
+
+
+
+인터셉터 
+extends HandlerInterceptorAdapter 후, 우클릭 - 소스 - 오버라이드
+servlet-context.xml에서 bean을 만들어줌
+<beans:bean id="memberInterceptor" class="com.care.root.member.interceptor.MemberInterceptor"/>
+
+<interceptors>
+	<interceptor>
+		<mapping path="/index"/>
+		<beans:ref bean="memberInterceptor"/>
+	</interceptor>
+</interceptors>
+
+사용자가 index를 요청하면 인터셉터쪽을 보겠다

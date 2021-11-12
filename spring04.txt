@@ -1,0 +1,17 @@
+자동로그인
+
+@RequestParam(required=false) String autoLogin
+만약 값이없으면(자동로그인에 체크를 하지 않으면) null값 처리하라
+required=false가 없으면 체크하지 않았을때 오류발생
+
+자동로그인 로그인성공시 쿠키를 만들어 사용자에게 보내줌
+
+
+alter table membership add session_id varchar2(100) default 'nan' not null;
+alter table membership add limit_time date;
+
+사용자 쿠키와 DB쿠키값을 비교하기 위해 자동로그인값을 DB에 저장함
+
+테이블을 바꿨으면 dto와 mybatis 변경해야함
+
+데이터베이스의 합성어 규칙 : 밑줄 / 자바 합성어 규칙 : 대문자
