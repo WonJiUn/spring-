@@ -1,0 +1,66 @@
+create table mvc_board(
+Write_no number(10) primary key,
+Title varchar2(100),
+Content varchar2(300),
+Savedate date default sysdate,
+Hit number(10) default 0,
+Image_file_name varchar(100),
+Id varchar(20) not null,
+constraint fk_test foreign key(id) references membership(id) on delete cascade
+);
+create sequence mvc_board_seq;
+
+Id : 로그인한 작성자
+제목, 내용등을 꼭 입력하게 설정하려면 not null 넣어야함
+id를 외래키로 설정하고 membership 테이블의 id를 참조함
+on delete cascade : 참조하고 있는 대상이 삭제되면 같이 삭제하라
+사용자가 탈퇴해도 내용을 삭제하지 않을거면 제약조건 설정하지 않아도됨
+foreign key(id) references 무결성 제약조건 : 부모테이블이 갖고있지 않은 id로 값을 추가하려고 하면 오류발생
+
+
+사진올리기에 관련된 의존성
+
+<!-- commons-fileupload -->
+<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.3.3</version>
+</dependency>
+
+<!-- commons-io -->
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.4</version>
+</dependency>
+
+
+
+글쓰기버튼 눌렀을때 로그인이 안됐을경우 로그인하라는 알림 인터셉터에서 처리하는 기능은
+예전에 만들었던거에서 servlet-context.xml에 mapping path 하나 추가하면 됨
+
+글번호는 유일값이라서 중복이 일어나면 오류페이지가 발생함
+
+
+create table reply(
+id varchar(20),
+title varchar(50),
+content varchar(300),
+write_group number(10),
+write_date date default sysdate,
+constraint fk_test1 foreign key(write_group) references mvc_board(write_no) on delete cascade,
+constraint fk_test2 foreign key(id) references membership(id) on delete cascade
+);
+
+게시판 답글달기
+회원탈퇴, 원글삭제가 되면 답글들도 같이 삭제됨.
+나중에는 항목들에 not null을 꼭 붙여줘야함
+
+<!-- JSON.stringify(문자열 json타입 변경)  -->
+<dependency>
+<groupId>com.fasterxml.jackson.core</groupId>
+<artifactId>jackson-databind</artifactId>
+<version>2.9.5</version>
+</dependency>
+
+답글기능에 들어간 pom.xml
