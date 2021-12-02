@@ -1,0 +1,52 @@
+tx_aop
+
+create table user_info(
+user_num number(5)
+);
+
+
+create table system_info(
+system_num number(5),
+constraint test_name check(system_num<=5)
+);
+
+실제로는 유저쪽에서 문제발생시 시스템 테이블쪽을 롤백시키는 방식으로 사용하지만
+지금 건 5 이하 제약조건은 수업에서 실패조건을 만들기 위함
+
+
+<!-- 트랜잭션 -->
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-tx</artifactId>
+  <version>${org.springframework-version}</version>
+</dependency>
+
+
+mybatis_junit에서 한것처럼 root-context.xml에 트랜잭션을 설정해도 되고 어노테이션을 통해 빈을 만들어도 됨
+
+@Configuration
+@EnableTransactionManagement
+public class TxConfig {
+    @Autowired HikariDataSource ds;
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+   DataSourceTransactionManager txMgr = new DataSourceTransactionManager();
+   txMgr.setDataSource(ds);
+   return txMgr;
+    }
+}
+
+
+----AOP dependency----
+
+<!-- AOP -->
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.8.6</version>
+</dependency> 
+<dependency> 
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjrt</artifactId>
+    <version>1.8.6</version>
+</dependency>
